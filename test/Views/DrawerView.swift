@@ -27,7 +27,7 @@ struct DrawerView: View {
         }
         .frame(maxWidth: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: 30)
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundColor(.white)
                 .shadow(color: .gray.opacity(0.5), radius: 8)
                 .padding(.bottom, -20)

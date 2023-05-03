@@ -13,7 +13,6 @@ struct DrawerContainerView: View {
     @Binding var isAnimating:Bool
     
     @State private var verticalOffset:CGFloat = .zero
-    @State private var didScrollDownABitFirst:Bool = false
     
     let insertAnimationTime:Double = 0.275
     let removalAnimationTime:Double = 0.15
@@ -25,9 +24,13 @@ struct DrawerContainerView: View {
                 .opacity(0.1)
                 .ignoresSafeArea()
                 .onTapGesture {
-                    // TODO: fix top of drawer still being visible here (swiftui bug)
                     if !isAnimating {
-                        isActive = false
+                        withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
+                            verticalOffset += 100
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+                                isActive = false
+                            }
+                        }
                     }
                 }
                 .opacity(isActive ? 1.0 : 0.0)
@@ -37,15 +40,17 @@ struct DrawerContainerView: View {
                     .gesture(
                         DragGesture()
                             .onChanged { v in
-                                withAnimation(.linear(duration: 0.3)) {
-                                    if !isAnimating, v.translation.height > (didScrollDownABitFirst ? -35 : 0) {
-                                        verticalOffset = v.translation.height
-                                        didScrollDownABitFirst = true
+                                withAnimation(.linear(duration: 0.2)) {
+                                    if !isAnimating {
+                                        if v.translation.height > 0 {
+                                            verticalOffset = v.translation.height
+                                        } else if v.translation.height > -35 {
+                                            verticalOffset = max(v.translation.height, -35)
+                                        }
                                     }
                                 }
                             }
                             .onEnded { v in
-                                didScrollDownABitFirst = false
                                 withAnimation {
                                     if !isAnimating, v.translation.height > 300 || v.predictedEndTranslation.height > 300 { // get height of drawer view
                                         isActive = false
@@ -59,7 +64,7 @@ struct DrawerContainerView: View {
                     .transition(.move(edge: .bottom))
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
+        .animation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
         .onChange(of: isActive) { b in
             if !b {
                 verticalOffset = .zero

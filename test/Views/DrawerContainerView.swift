@@ -15,6 +15,9 @@ struct DrawerContainerView: View {
     @State private var verticalOffset:CGFloat = .zero
     @State private var didScrollDownABitFirst:Bool = false
     
+    let insertAnimationTime:Double = 0.275
+    let removalAnimationTime:Double = 0.15
+    
     var body: some View {
         
         ZStack(alignment: .bottom) {
@@ -34,8 +37,8 @@ struct DrawerContainerView: View {
                     .gesture(
                         DragGesture()
                             .onChanged { v in
-                                withAnimation(.default) {
-                                    if !isAnimating, v.translation.height > (didScrollDownABitFirst ? -40 : 0) {
+                                withAnimation(.linear(duration: 0.3)) {
+                                    if !isAnimating, v.translation.height > (didScrollDownABitFirst ? -35 : 0) {
                                         verticalOffset = v.translation.height
                                         didScrollDownABitFirst = true
                                     }
@@ -44,7 +47,7 @@ struct DrawerContainerView: View {
                             .onEnded { v in
                                 didScrollDownABitFirst = false
                                 withAnimation {
-                                    if !isAnimating, v.translation.height > 100 || v.predictedEndTranslation.height > 100 {
+                                    if !isAnimating, v.translation.height > 300 || v.predictedEndTranslation.height > 300 { // get height of drawer view
                                         isActive = false
                                     } else {
                                         verticalOffset  = .zero
@@ -61,12 +64,12 @@ struct DrawerContainerView: View {
             if !b {
                 verticalOffset = .zero
                 isAnimating = true
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.15) {
+                DispatchQueue.main.asyncAfter(deadline: .now()+removalAnimationTime) {
                     isAnimating = false
                 }
             } else {
                 isAnimating = true
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now()+insertAnimationTime) {
                     isAnimating = false
                 }
             }

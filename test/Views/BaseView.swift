@@ -26,8 +26,8 @@ struct BaseView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(0..<15) { _ in
-                        Text("content")
+                    ForEach(0..<10) { _ in
+                        Text("scroll for buttery smooth animations")
                             .padding()
                     }
                 }

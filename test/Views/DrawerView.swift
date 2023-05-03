@@ -55,12 +55,3 @@ struct DrawerView_Previews: PreviewProvider {
         DrawerView()
     }
 }
-
-extension UIScreen {
-    public var displayCornerRadius: CGFloat {
-        guard let cornerRadius = self.value(forKey:"_displayCornerRadius") as? CGFloat else {
-            return 30
-        }
-        return cornerRadius
-    }
-}

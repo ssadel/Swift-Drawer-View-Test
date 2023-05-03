@@ -70,8 +70,8 @@ struct DrawerContainerView: View {
         }
         .animation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
         .onChange(of: isActive) { b in
+            verticalOffset = .zero
             if !b {
-                verticalOffset = .zero
                 isAnimating = true
                 DispatchQueue.main.asyncAfter(deadline: .now()+removalAnimationTime) {
                     isAnimating = false

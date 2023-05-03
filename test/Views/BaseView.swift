@@ -24,6 +24,16 @@ struct BaseView: View {
             .disabled(isAnimating)
             .padding(.top)
             
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(0..<15) { _ in
+                        Text("content")
+                            .padding()
+                    }
+                }
+            }
+            .frame(height: 100)
+            
             Spacer()
         }
         .frame(maxWidth: .infinity)

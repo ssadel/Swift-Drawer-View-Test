@@ -15,7 +15,7 @@ struct DrawerView: View {
         
         VStack {
             RoundedRectangle(cornerRadius: 6)
-                .frame(width: 35, height: 3.5)
+                .frame(width: 32, height: 3.5)
                 .foregroundColor(.gray.opacity(0.3))
                 .padding(.top, 15)
                 .padding(.bottom, 10)

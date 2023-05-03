@@ -12,6 +12,7 @@ struct DrawerContainerView: View {
     @Binding var isActive:Bool
     
     @State private var verticalOffset:CGFloat = .zero
+    @State private var didScrollDownABitFirst:Bool = false
     
     var body: some View {
         
@@ -29,13 +30,15 @@ struct DrawerContainerView: View {
                     .gesture(
                         DragGesture()
                             .onChanged { v in
-                                withAnimation {
-                                    if v.translation.height > 0 {
+                                withAnimation(.default) {
+                                    if v.translation.height > (didScrollDownABitFirst ? -40 : 0) {
                                         verticalOffset = v.translation.height
+                                        didScrollDownABitFirst = true
                                     }
                                 }
                             }
                             .onEnded { v in
+                                didScrollDownABitFirst = false
                                 withAnimation {
                                     if v.translation.height > 100 || v.predictedEndTranslation.height > 100 {
                                         isActive = false
@@ -45,19 +48,19 @@ struct DrawerContainerView: View {
                                 }
                             }
                     )
-                    .zIndex(1)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .zIndex(2)
+                    .transition(.move(edge: .bottom))
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
         .onChange(of: isActive) { b in
+            print(b ? "active" : "not active")
             if !b {
                 verticalOffset = .zero
             }
         }
         
     }
-    
 }
 
 struct DrawerContainerView_Previews: PreviewProvider {

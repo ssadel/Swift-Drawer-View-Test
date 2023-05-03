@@ -10,6 +10,7 @@ import SwiftUI
 struct BaseView: View {
     
     @State private var isDrawerActive:Bool = false
+    @State private var isAnimating:Bool = false
     
     var body: some View {
         
@@ -20,12 +21,14 @@ struct BaseView: View {
                 Text("Open Drawer")
             }
             .buttonStyle(.bordered)
+            .disabled(isAnimating)
             .padding(.top)
+            
             Spacer()
         }
         .frame(maxWidth: .infinity)
         .overlay(
-            DrawerContainerView(isActive: $isDrawerActive)
+            DrawerContainerView(isActive: $isDrawerActive, isAnimating: $isAnimating)
         )
     }
 }

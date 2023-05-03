@@ -10,6 +10,7 @@ import SwiftUI
 struct DrawerContainerView: View {
     
     @Binding var isActive:Bool
+    @Binding var isAnimating:Bool
     
     @State private var verticalOffset:CGFloat = .zero
     @State private var didScrollDownABitFirst:Bool = false
@@ -22,7 +23,9 @@ struct DrawerContainerView: View {
                 .ignoresSafeArea()
                 .onTapGesture {
                     // TODO: fix top of drawer still being visible here (swiftui bug)
-                    isActive = false
+                    if !isAnimating {
+                        isActive = false
+                    }
                 }
                 .opacity(isActive ? 1.0 : 0.0)
             if isActive {
@@ -32,7 +35,7 @@ struct DrawerContainerView: View {
                         DragGesture()
                             .onChanged { v in
                                 withAnimation(.default) {
-                                    if v.translation.height > (didScrollDownABitFirst ? -40 : 0) {
+                                    if !isAnimating, v.translation.height > (didScrollDownABitFirst ? -40 : 0) {
                                         verticalOffset = v.translation.height
                                         didScrollDownABitFirst = true
                                     }
@@ -41,7 +44,7 @@ struct DrawerContainerView: View {
                             .onEnded { v in
                                 didScrollDownABitFirst = false
                                 withAnimation {
-                                    if v.translation.height > 100 || v.predictedEndTranslation.height > 100 {
+                                    if !isAnimating, v.translation.height > 100 || v.predictedEndTranslation.height > 100 {
                                         isActive = false
                                     } else {
                                         verticalOffset  = .zero
@@ -57,6 +60,15 @@ struct DrawerContainerView: View {
         .onChange(of: isActive) { b in
             if !b {
                 verticalOffset = .zero
+                isAnimating = true
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.15) {
+                    isAnimating = false
+                }
+            } else {
+                isAnimating = true
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                    isAnimating = false
+                }
             }
         }
         
@@ -65,6 +77,6 @@ struct DrawerContainerView: View {
 
 struct DrawerContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerContainerView(isActive: .constant(true))
+        DrawerContainerView(isActive: .constant(true), isAnimating: .constant(false))
     }
 }

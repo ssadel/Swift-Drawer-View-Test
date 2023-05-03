@@ -21,6 +21,7 @@ struct DrawerContainerView: View {
                 .opacity(0.1)
                 .ignoresSafeArea()
                 .onTapGesture {
+                    // TODO: fix top of drawer still being visible here (swiftui bug)
                     isActive = false
                 }
                 .opacity(isActive ? 1.0 : 0.0)
@@ -54,7 +55,6 @@ struct DrawerContainerView: View {
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
         .onChange(of: isActive) { b in
-            print(b ? "active" : "not active")
             if !b {
                 verticalOffset = .zero
             }

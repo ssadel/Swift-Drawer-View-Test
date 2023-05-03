@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = value ?? nextValue()
+    }
+}
+
 struct DrawerView: View {
     
     let cells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
@@ -19,6 +27,7 @@ struct DrawerView: View {
                 .foregroundColor(.gray.opacity(0.3))
                 .padding(.top, 15)
                 .padding(.bottom, 10)
+            
             ForEach(cells, id: \.self) { text in
                 DrawerCell(text: text) {
                     print("tapped")
@@ -27,13 +36,17 @@ struct DrawerView: View {
         }
         .frame(maxWidth: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .foregroundColor(.white)
-                .shadow(color: .gray.opacity(0.5), radius: 8)
-                .padding(.bottom, -20)
+            GeometryReader { proxy in
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .foregroundColor(.white)
+                    .shadow(color: .gray.opacity(0.5), radius: 8)
+                    .padding(.bottom, -20)
+                    .preference(key: ViewHeightKey.self, value: proxy.size.height)
+            }
         )
         .padding(.bottom)
         .padding(.horizontal, 10)
+        
     }
 }
 
@@ -42,7 +55,6 @@ struct DrawerView_Previews: PreviewProvider {
         DrawerView()
     }
 }
-
 
 extension UIScreen {
     public var displayCornerRadius: CGFloat {

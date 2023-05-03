@@ -13,6 +13,7 @@ struct DrawerContainerView: View {
     @Binding var isAnimating:Bool
     
     @State private var verticalOffset:CGFloat = .zero
+    @State private var drawerHeight:CGFloat = .zero
     
     let insertAnimationTime:Double = 0.275
     let removalAnimationTime:Double = 0.15
@@ -36,6 +37,9 @@ struct DrawerContainerView: View {
                 .opacity(isActive ? 1.0 : 0.0)
             if isActive {
                 DrawerView()
+                    .onPreferenceChange(ViewHeightKey.self) { value in
+                        drawerHeight = value
+                    }
                     .offset(y: verticalOffset)
                     .gesture(
                         DragGesture()
@@ -52,7 +56,7 @@ struct DrawerContainerView: View {
                             }
                             .onEnded { v in
                                 withAnimation {
-                                    if !isAnimating, v.translation.height > 300 || v.predictedEndTranslation.height > 300 { // get height of drawer view
+                                    if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
                                         isActive = false
                                     } else {
                                         verticalOffset  = .zero

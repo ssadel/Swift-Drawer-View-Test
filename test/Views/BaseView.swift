@@ -36,7 +36,7 @@ struct BaseView: View {
             
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(
             DrawerContainerView(isActive: $isDrawerActive, isAnimating: $isAnimating)
         )

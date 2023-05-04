@@ -16,26 +16,26 @@ struct DrawerView: View {
 
     var isDraggingDrawer:Bool
     @Binding var isChildViewActive:Bool
-    let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
-    let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
+    @Namespace private var drawerTransition
+    private let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
+    private let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
     
     var body: some View {
         
         ZStack {
             if isChildViewActive {
                 childView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
             } else {
                 defaultView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
         .animation(.easeOut(duration: 0.24), value: isChildViewActive)
-        .mask(
-            drawerBackground
-                .padding(.bottom, 1)
-        )
+        .mask(drawerBackground.padding(.bottom, 1))
         .background(
             GeometryReader { proxy in
                 drawerBackground

@@ -37,11 +37,39 @@ struct DrawerCell_Previews: PreviewProvider {
     }
 }
 
+
 struct InteractiveButtonStyle: ButtonStyle {
+    @State private var isPressed: Bool = false
+    @State private var isLongPress: Bool = false
+    @State private var timer: Timer?
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
-            .contentShape(RoundedRectangle(cornerRadius: 10))
-            .animation(.easeIn(duration: 0.12), value: configuration.isPressed)
+            .scaleEffect(isPressed ? 0.97 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: isPressed)
+            .onChange(of: configuration.isPressed) { newValue in
+                if newValue {
+                    withAnimation {
+                        isPressed = true
+                    }
+                    timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
+                        isLongPress = true
+                    }
+                } else {
+                    timer?.invalidate()
+                    if !isLongPress {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+                            withAnimation {
+                                isPressed = false
+                            }
+                        }
+                    } else {
+                        withAnimation {
+                            isPressed = false
+                        }
+                    }
+                    isLongPress = false
+                }
+            }
     }
 }

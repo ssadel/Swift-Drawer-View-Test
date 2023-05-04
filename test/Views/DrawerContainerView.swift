@@ -37,6 +37,7 @@ struct DrawerContainerView: View {
                 .opacity(isActive ? 1.0 : 0.0)
             if isActive {
                 DrawerView()
+                    .id("DrawerView")
                     .onPreferenceChange(ViewHeightKey.self) { value in
                         drawerHeight = value
                     }

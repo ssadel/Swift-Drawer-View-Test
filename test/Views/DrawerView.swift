@@ -16,7 +16,8 @@ struct ViewHeightKey: PreferenceKey {
 }
 
 struct DrawerView: View {
-    
+
+    var isDraggingDrawer:Bool
     let cells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
     
     var body: some View {
@@ -30,8 +31,9 @@ struct DrawerView: View {
             
             ForEach(cells, id: \.self) { text in
                 DrawerCell(text: text) {
-                    print("tapped")
+                    print("tapped \(text)")
                 }
+                .disabled(isDraggingDrawer)
             }
         }
         .frame(maxWidth: .infinity)
@@ -52,6 +54,6 @@ struct DrawerView: View {
 
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerView()
+        DrawerView(isDraggingDrawer: false)
     }
 }

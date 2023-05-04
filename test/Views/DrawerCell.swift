@@ -27,7 +27,7 @@ struct DrawerCell: View {
                 .padding(.horizontal)
         }
         .buttonStyle(InteractiveButtonStyle())
-        .disabled(true)
+        
     }
 }
 

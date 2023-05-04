@@ -14,6 +14,7 @@ struct DrawerContainerView: View {
     
     @State private var verticalOffset:CGFloat = .zero
     @State private var drawerHeight:CGFloat = .zero
+    @GestureState private var isDragging:Bool = false
     
     let insertAnimationTime:Double = 0.275
     let removalAnimationTime:Double = 0.15
@@ -36,14 +37,17 @@ struct DrawerContainerView: View {
                 }
                 .opacity(isActive ? 1.0 : 0.0)
             if isActive {
-                DrawerView()
+                DrawerView(isDraggingDrawer: isDragging)
                     .id("DrawerView")
                     .onPreferenceChange(ViewHeightKey.self) { value in
                         drawerHeight = value
                     }
                     .offset(y: verticalOffset)
-                    .gesture(
+                    .simultaneousGesture(
                         DragGesture()
+                            .updating($isDragging, body: { value, state, transaction in
+                                state = value.translation.height > 0
+                            })
                             .onChanged { v in
                                 withAnimation(.linear(duration: 0.2)) {
                                     if !isAnimating {

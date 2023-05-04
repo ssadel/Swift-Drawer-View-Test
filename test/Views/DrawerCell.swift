@@ -20,7 +20,7 @@ struct DrawerCell: View {
             }
         } label: {
             Text(text)
-                .font(.headline.weight(.semibold))
+                .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 18, style: .continuous).foregroundColor(.gray.opacity(0.1)))

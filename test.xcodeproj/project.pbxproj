@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C238A3472A0474580083C775 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A3462A0474580083C775 /* BackButton.swift */; };
 		C29022202A02D20500E83C30 /* testApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C290221F2A02D20500E83C30 /* testApp.swift */; };
 		C29022222A02D20500E83C30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29022212A02D20500E83C30 /* ContentView.swift */; };
 		C29022242A02D20600E83C30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29022232A02D20600E83C30 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C238A3462A0474580083C775 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		C290221C2A02D20500E83C30 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C290221F2A02D20500E83C30 /* testApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testApp.swift; sourceTree = "<group>"; };
 		C29022212A02D20500E83C30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				C29022302A02D29D00E83C30 /* DrawerView.swift */,
 				C29022342A02D74200E83C30 /* DrawerContainerView.swift */,
 				C29022322A02D47500E83C30 /* DrawerCell.swift */,
+				C238A3462A0474580083C775 /* BackButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C290222F2A02D23700E83C30 /* BaseView.swift in Sources */,
+				C238A3472A0474580083C775 /* BackButton.swift in Sources */,
 				C29022222A02D20500E83C30 /* ContentView.swift in Sources */,
 				C29022202A02D20500E83C30 /* testApp.swift in Sources */,
 				C29022352A02D74200E83C30 /* DrawerContainerView.swift in Sources */,

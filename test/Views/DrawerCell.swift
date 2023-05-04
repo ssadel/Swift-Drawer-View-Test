@@ -11,6 +11,7 @@ struct DrawerCell: View {
     
     var text:String
     var action:(()->())? = nil
+    var foregroundColor:Color = .primary
     
     var body: some View {
         
@@ -20,6 +21,7 @@ struct DrawerCell: View {
             }
         } label: {
             Text(text)
+                .foregroundColor(foregroundColor)
                 .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()

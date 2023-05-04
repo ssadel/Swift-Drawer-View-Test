@@ -22,55 +22,11 @@ struct DrawerContainerView: View {
     var body: some View {
         
         ZStack(alignment: .bottom) {
-            Color.black
-                .opacity(0.1)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    if !isAnimating {
-                        withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
-                            verticalOffset += 100
-                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
-                                isActive = false
-                            }
-                        }
-                    }
-                }
+            background
                 .opacity(isActive ? 1.0 : 0.0)
+            
             if isActive {
-                DrawerView(isDraggingDrawer: isDragging)
-                    .id("DrawerView")
-                    .onPreferenceChange(ViewHeightKey.self) { value in
-                        drawerHeight = value
-                    }
-                    .offset(y: verticalOffset)
-                    .simultaneousGesture(
-                        DragGesture()
-                            .updating($isDragging, body: { value, state, transaction in
-                                state = value.translation.height > 0
-                            })
-                            .onChanged { v in
-                                withAnimation(.linear(duration: 0.2)) {
-                                    if !isAnimating {
-                                        if v.translation.height > 0 {
-                                            verticalOffset = v.translation.height
-                                        } else if v.translation.height > -35 {
-                                            verticalOffset = max(v.translation.height, -35)
-                                        }
-                                    }
-                                }
-                            }
-                            .onEnded { v in
-                                withAnimation {
-                                    if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
-                                        isActive = false
-                                    } else {
-                                        verticalOffset  = .zero
-                                    }
-                                }
-                            }
-                    )
-                    .zIndex(2)
-                    .transition(.move(edge: .bottom))
+                drawerView
             }
         }
         .animation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
@@ -90,6 +46,60 @@ struct DrawerContainerView: View {
         }
         
     }
+    
+    var background: some View {
+        Color.black
+            .opacity(0.1)
+            .ignoresSafeArea()
+            .onTapGesture {
+                if !isAnimating {
+                    withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
+                        verticalOffset += 100
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+                            isActive = false
+                        }
+                    }
+                }
+            }
+    }
+    
+    var drawerView: some View {
+        DrawerView(isDraggingDrawer: isDragging)
+            .id("DrawerView")
+            .onPreferenceChange(ViewHeightKey.self) { value in
+                drawerHeight = value
+            }
+            .offset(y: verticalOffset)
+            .simultaneousGesture(
+                DragGesture()
+                    .updating($isDragging, body: { value, state, transaction in
+                        state = value.translation.height > 0
+                    })
+                    .onChanged { v in
+                        withAnimation(.linear(duration: 0.2)) {
+                            if !isAnimating {
+                                if v.translation.height > 0 {
+                                    verticalOffset = v.translation.height
+                                } else if v.translation.height > -35 {
+                                    verticalOffset = max(v.translation.height, -35)
+                                }
+                            }
+                        }
+                    }
+                    .onEnded { v in
+                        withAnimation {
+                            if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
+                                isActive = false
+                            } else {
+                                verticalOffset  = .zero
+                            }
+                        }
+                    }
+            )
+            .zIndex(2)
+            .transition(.move(edge: .bottom))
+    }
+    
 }
 
 struct DrawerContainerView_Previews: PreviewProvider {

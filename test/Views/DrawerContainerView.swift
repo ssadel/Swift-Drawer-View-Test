@@ -96,6 +96,7 @@ struct DrawerContainerView: View {
                         }
                     }
             )
+            .allowsHitTesting(!isDragging)
             .zIndex(2)
             .transition(.move(edge: .bottom))
     }

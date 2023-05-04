@@ -16,7 +16,6 @@ struct DrawerView: View {
 
     var isDraggingDrawer:Bool
     @Binding var isChildViewActive:Bool
-    
     let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
     let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
     
@@ -25,12 +24,13 @@ struct DrawerView: View {
         ZStack {
             if isChildViewActive {
                 childView
+                    .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
             } else {
                 defaultView
-                    .transition(.asymmetric(insertion: .move(edge: .bottom).combined(with: .opacity), removal: .scale(scale: 1.05).combined(with: .opacity).animation(.easeOut(duration: 0.09))))
+                    .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
             }
         }
-        .padding(.top, 22.5)
+        .padding(.top, 22.5) /// Padding for top bar
         .animation(.easeOut(duration: 0.24), value: isChildViewActive)
         .mask(
             drawerBackground
@@ -83,7 +83,6 @@ struct DrawerView: View {
                 .padding(.top, 7.5)
         }
     }
-    
 }
 
 struct DrawerView_Previews: PreviewProvider {

@@ -29,6 +29,7 @@ struct DrawerContainerView: View {
             
             if isActive {
                 drawerView
+                    .id("DrawerView")
             }
         }
         .animation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
@@ -68,7 +69,6 @@ struct DrawerContainerView: View {
     
     var drawerView: some View {
         DrawerView(isDraggingDrawer: isDragging, isChildViewActive: $isChildViewActive)
-            .id("DrawerView")
             .onPreferenceChange(ViewHeightKey.self) { value in
                 drawerHeight = value
             }
@@ -100,7 +100,7 @@ struct DrawerContainerView: View {
                     }
             )
             .allowsHitTesting(!isDragging)
-            .zIndex(2)
+            .zIndex(1)
             .transition(.move(edge: .bottom))
     }
     

@@ -64,6 +64,7 @@ struct DrawerContainerView: View {
             .onTapGesture {
                 if !isAnimating {
                     withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         verticalOffset += 100
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
                             isActive = false

@@ -36,7 +36,7 @@ struct DrawerView: View {
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
             case .EditName:
                 editNameView
-                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    // .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
             }
         }
@@ -47,13 +47,14 @@ struct DrawerView: View {
                 drawerBackground
                     .preference(key: ViewHeightKey.self, value: proxy.size.height)
             }
+            , alignment: .top
         )
         .padding(.bottom)
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
-        .shadow(color: .gray.opacity(0.5), radius: 8)
+        .shadow(color: .gray.opacity(0.4), radius: 8)
         .animation(.easeOut(duration: 0.24), value: drawerRoute)
-        
+        .padding(.bottom, drawerRoute == .EditName ? 10 : 0)
     }
     
     var baseView: some View {
@@ -63,7 +64,7 @@ struct DrawerView: View {
                     if text != "Edit Name" {
                         drawerRoute = .Account
                     } else {
-                        //isFocused = true
+                        isFocused = true
                         drawerRoute = .EditName
                     }
                 }
@@ -109,6 +110,7 @@ struct DrawerView: View {
                         .font(.subheadline.weight(.semibold))
                         .background(Capsule(style: .continuous).foregroundColor(.gray.opacity(0.1)))
                 }
+                .buttonStyle(InteractiveButtonStyle())
                 Spacer()
                 Button {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -121,9 +123,9 @@ struct DrawerView: View {
                         .font(.subheadline.weight(.semibold))
                         .background(Capsule(style: .continuous).foregroundColor(.green))
                 }
+                .buttonStyle(InteractiveButtonStyle())
             }
             .padding(.horizontal)
-            //Spacer()
         }
     }
     

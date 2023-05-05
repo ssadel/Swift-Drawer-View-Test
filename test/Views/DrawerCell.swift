@@ -25,7 +25,7 @@ struct DrawerCell: View {
                 .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 18, style: .continuous).foregroundColor(.gray.opacity(0.1)))
+                .background(RoundedRectangle(cornerRadius: 18, style: .continuous).foregroundColor(.gray.opacity(0.075)))
                 .padding(.horizontal)
         }
         .buttonStyle(InteractiveButtonStyle())

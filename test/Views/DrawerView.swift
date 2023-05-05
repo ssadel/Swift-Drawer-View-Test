@@ -34,17 +34,18 @@ struct DrawerView: View {
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
-        .animation(.easeOut(duration: 0.24), value: isChildViewActive)
         .mask(drawerBackground)
         .background(
             GeometryReader { proxy in
                 drawerBackground
                     .preference(key: ViewHeightKey.self, value: proxy.size.height)
             }
-                .animation(.easeOut(duration: 0.24), value: isChildViewActive)
         )
         .padding(.bottom)
+        .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
+        .shadow(color: .gray.opacity(0.5), radius: 8)
+        .animation(.easeOut(duration: 0.24), value: isChildViewActive)
         
     }
     
@@ -75,7 +76,6 @@ struct DrawerView: View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundColor(.white)
-                .shadow(color: .gray.opacity(0.5), radius: 8)
                 .padding(.bottom, -20)
             RoundedRectangle(cornerRadius: 6)
                 .frame(width: 32, height: 3.5)

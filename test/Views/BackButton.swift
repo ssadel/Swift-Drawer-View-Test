@@ -22,7 +22,7 @@ struct BackButton: View {
                 .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(10)
-                .background(Capsule(style: .continuous).foregroundColor(.gray.opacity(0.14)))
+                .background(Capsule(style: .continuous).foregroundColor(.gray.opacity(0.12)))
                 .padding(.horizontal)
         }
         .buttonStyle(InteractiveButtonStyle())

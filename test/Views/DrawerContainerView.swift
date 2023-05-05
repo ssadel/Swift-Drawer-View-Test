@@ -64,7 +64,7 @@ struct DrawerContainerView: View {
             .onTapGesture {
                 if !isAnimating {
                     withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        self.dismissKeyboard()
                         verticalOffset += 100
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
                             isActive = false
@@ -99,14 +99,13 @@ struct DrawerContainerView: View {
                     .onEnded { v in
                         withAnimation {
                             if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero
                             }
                         }
                     }
-            )
+            ) 
             .allowsHitTesting(!isDragging)
             .zIndex(1)
             .transition(.move(edge: .bottom))
@@ -117,5 +116,11 @@ struct DrawerContainerView: View {
 struct DrawerContainerView_Previews: PreviewProvider {
     static var previews: some View {
         DrawerContainerView(isActive: .constant(true), isAnimating: .constant(false))
+    }
+}
+
+extension View {
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

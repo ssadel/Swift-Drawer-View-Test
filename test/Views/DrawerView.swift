@@ -103,7 +103,7 @@ struct DrawerView: View {
                 }
             HStack {
                 Button {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    self.dismissKeyboard()
                     drawerRoute = .Base
                 } label: {
                     Text("Cancel")
@@ -116,7 +116,7 @@ struct DrawerView: View {
                 .buttonStyle(InteractiveButtonStyle())
                 Spacer()
                 Button {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    self.dismissKeyboard()
                     drawerRoute = .Base
                 } label: {
                     Text("Save")

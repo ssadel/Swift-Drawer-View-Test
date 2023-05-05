@@ -53,8 +53,8 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
+        .padding(.bottom, drawerRoute == .EditName ? 310 : 0) /// Keyboard Height
         .animation(.easeOut(duration: 0.24), value: drawerRoute)
-        .padding(.bottom, drawerRoute == .EditName ? 10 : 0)
     }
     
     var baseView: some View {

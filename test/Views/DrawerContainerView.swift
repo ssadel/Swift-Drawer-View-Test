@@ -99,6 +99,7 @@ struct DrawerContainerView: View {
                     .onEnded { v in
                         withAnimation {
                             if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero

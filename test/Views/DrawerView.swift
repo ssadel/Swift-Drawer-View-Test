@@ -29,15 +29,15 @@ struct DrawerView: View {
             case .Base:
                 baseView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
+                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
             case .Account:
                 accountView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
             case .EditName:
                 editNameView
                     // .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
@@ -96,7 +96,7 @@ struct DrawerView: View {
                 .padding(.vertical, 7.5)
                 .background(RoundedRectangle(cornerRadius: 12, style: .continuous).foregroundColor(.gray.opacity(0.1)))
                 .padding(.horizontal)
-                .padding(.vertical, 10)
+                .padding(.bottom, 10)
                 .focused($isFocused)
                 .onAppear {
                     isFocused = true

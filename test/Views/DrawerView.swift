@@ -16,8 +16,9 @@ struct DrawerView: View {
 
     var isDraggingDrawer:Bool
     @Binding var drawerRoute:DrawerNavigationRoute
+    var isFocused:FocusState<Bool>.Binding
+    
     @Namespace private var drawerTransition
-    @FocusState private var isFocused:Bool
     
     private let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
     private let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
@@ -53,7 +54,7 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
-        .padding(.bottom, drawerRoute == .EditName ? 310 : 0) /// Keyboard Height
+        .padding(.bottom, drawerRoute == .EditName ? 310 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
         .animation(.easeOut(duration: 0.24), value: drawerRoute)
     }
     
@@ -63,7 +64,7 @@ struct DrawerView: View {
                 DrawerCell(text: text) {
                     switch text {
                     case "Edit Name":
-                        isFocused = true
+                        isFocused.wrappedValue = true
                         drawerRoute = .EditName
                     case "Account":
                         drawerRoute = .Account
@@ -97,9 +98,10 @@ struct DrawerView: View {
                 .background(RoundedRectangle(cornerRadius: 12, style: .continuous).foregroundColor(.gray.opacity(0.1)))
                 .padding(.horizontal)
                 .padding(.bottom, 10)
-                .focused($isFocused)
+                .focused(isFocused)
+                .accentColor(.green)
                 .onAppear {
-                    isFocused = true
+                    isFocused.wrappedValue = true
                 }
             HStack {
                 Button {
@@ -147,7 +149,7 @@ struct DrawerView: View {
 
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        //BaseView()
-        DrawerView(isDraggingDrawer: false, drawerRoute: .constant(.EditName))
+        BaseView()
+        //DrawerView(isDraggingDrawer: false, drawerRoute: .constant(.EditName), isFocused: FocusState(true))
     }
 }

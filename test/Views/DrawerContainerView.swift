@@ -21,11 +21,12 @@ struct DrawerContainerView: View {
     @State private var verticalOffset:CGFloat = .zero
     @State private var drawerHeight:CGFloat = .zero
     @GestureState private var isDragging:Bool = false
+    @FocusState private var isFocused:Bool
     
     @State private var drawerRoute:DrawerNavigationRoute = .Base
     
-    let insertAnimationTime:Double = 0.275
-    let removalAnimationTime:Double = 0.15
+    private let insertAnimationTime:Double = 0.275
+    private let removalAnimationTime:Double = 0.15
     
     var body: some View {
         
@@ -57,6 +58,7 @@ struct DrawerContainerView: View {
         
     }
     
+    /// A semi-transparent background view that dismisses the drawer when tapped
     var background: some View {
         Color.black
             .opacity(0.1)
@@ -74,8 +76,9 @@ struct DrawerContainerView: View {
             }
     }
     
+    /// The main drawer view that includes the gesture for dragging
     var drawerView: some View {
-        DrawerView(isDraggingDrawer: isDragging, drawerRoute: $drawerRoute)
+        DrawerView(isDraggingDrawer: isDragging, drawerRoute: $drawerRoute, isFocused: $isFocused)
             .onPreferenceChange(ViewHeightKey.self) { value in
                 drawerHeight = value
             }
@@ -90,6 +93,7 @@ struct DrawerContainerView: View {
                             if !isAnimating {
                                 if v.translation.height > 0 {
                                     verticalOffset = v.translation.height
+                                    self.dismissKeyboard()
                                 } else if v.translation.height > -35 {
                                     verticalOffset = max(v.translation.height, -35)
                                 }
@@ -102,6 +106,7 @@ struct DrawerContainerView: View {
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero
+                                isFocused = true
                             }
                         }
                     }

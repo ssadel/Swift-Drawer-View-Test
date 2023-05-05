@@ -21,6 +21,7 @@ struct DrawerCell: View {
             }
         } label: {
             Text(text)
+                .fixedSize()
                 .foregroundColor(foregroundColor)
                 .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)

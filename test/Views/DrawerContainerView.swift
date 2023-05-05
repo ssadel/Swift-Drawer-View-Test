@@ -59,7 +59,7 @@ struct DrawerContainerView: View {
     }
     
     /// A semi-transparent background view that dismisses the drawer when tapped
-    var background: some View {
+    private var background: some View {
         Color.black
             .opacity(0.14)
             .ignoresSafeArea()
@@ -77,7 +77,7 @@ struct DrawerContainerView: View {
     }
     
     /// The main drawer view that includes the gesture for dragging
-    var drawerView: some View {
+    private var drawerView: some View {
         DrawerView(isDraggingDrawer: isDragging, drawerRoute: $drawerRoute, isFocused: $isFocused)
             .onPreferenceChange(ViewHeightKey.self) { value in
                 drawerHeight = value

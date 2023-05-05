@@ -58,7 +58,7 @@ struct DrawerView: View {
         .animation(.easeOut(duration: 0.24), value: drawerRoute)
     }
     
-    var baseView: some View {
+    private var baseView: some View {
         VStack {
             ForEach(defaultCells, id: \.self) { text in
                 DrawerCell(text: text) {
@@ -77,7 +77,7 @@ struct DrawerView: View {
         }
     }
     
-    var accountView: some View {
+    private var accountView: some View {
         VStack {
             ForEach(childCells, id: \.self) { text in
                 DrawerCell(text: text, foregroundColor: text == "Delete Account" || text == "Logout" ? .red : .primary)
@@ -89,7 +89,7 @@ struct DrawerView: View {
         }
     }
     
-    var editNameView: some View {
+    private var editNameView: some View {
         VStack {
             TextField("Name", text: .constant("Sid"))
                 .font(.subheadline.weight(.semibold))
@@ -134,7 +134,7 @@ struct DrawerView: View {
         }
     }
     
-    var drawerBackground: some View {
+    private var drawerBackground: some View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundColor(.white)

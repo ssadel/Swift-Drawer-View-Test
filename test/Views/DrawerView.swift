@@ -15,22 +15,29 @@ struct ViewHeightKey: PreferenceKey {
 struct DrawerView: View {
 
     var isDraggingDrawer:Bool
-    @Binding var isChildViewActive:Bool
+    @Binding var drawerRoute:DrawerNavigationRoute
     @Namespace private var drawerTransition
+    @FocusState private var isFocused:Bool
+    
     private let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
     private let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
     
     var body: some View {
         
         ZStack {
-            if isChildViewActive {
-                childView
-                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
-            } else {
-                defaultView
+            switch drawerRoute {
+            case .Base:
+                baseView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
+            case .Account:
+                accountView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
+            case .EditName:
+                editNameView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
@@ -45,30 +52,78 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.5), radius: 8)
-        .animation(.easeOut(duration: 0.24), value: isChildViewActive)
+        .animation(.easeOut(duration: 0.24), value: drawerRoute)
         
     }
     
-    var defaultView: some View {
+    var baseView: some View {
         VStack {
             ForEach(defaultCells, id: \.self) { text in
                 DrawerCell(text: text) {
-                    isChildViewActive = true
+                    if text != "Edit Name" {
+                        drawerRoute = .Account
+                    } else {
+                        //isFocused = true
+                        drawerRoute = .EditName
+                    }
                 }
                 .disabled(isDraggingDrawer)
             }
         }
     }
     
-    var childView: some View {
+    var accountView: some View {
         VStack {
             ForEach(childCells, id: \.self) { text in
                 DrawerCell(text: text, foregroundColor: text == "Delete Account" || text == "Logout" ? .red : .primary)
                     .disabled(isDraggingDrawer)
             }
             BackButton {
-                isChildViewActive = false
+                drawerRoute = .Base
             }
+        }
+    }
+    
+    var editNameView: some View {
+        VStack {
+            TextField("Name", text: .constant("Sid"))
+                .font(.subheadline.weight(.semibold))
+                .padding(.horizontal)
+                .padding(.vertical, 7.5)
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).foregroundColor(.gray.opacity(0.1)))
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+                .focused($isFocused)
+                .onAppear {
+                    isFocused = true
+                }
+            HStack {
+                Button {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    drawerRoute = .Base
+                } label: {
+                    Text("Cancel")
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.primary)
+                        .font(.subheadline.weight(.semibold))
+                        .background(Capsule(style: .continuous).foregroundColor(.gray.opacity(0.1)))
+                }
+                Spacer()
+                Button {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    drawerRoute = .Base
+                } label: {
+                    Text("Save")
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.white)
+                        .font(.subheadline.weight(.semibold))
+                        .background(Capsule(style: .continuous).foregroundColor(.green))
+                }
+            }
+            .padding(.horizontal)
+            //Spacer()
         }
     }
     
@@ -87,6 +142,7 @@ struct DrawerView: View {
 
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        BaseView()
+        //BaseView()
+        DrawerView(isDraggingDrawer: false, drawerRoute: .constant(.EditName))
     }
 }

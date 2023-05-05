@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum DrawerNavigationRoute {
+    case Base
+    case Account
+    case EditName
+}
+
 struct DrawerContainerView: View {
     
     @Binding var isActive:Bool
@@ -16,7 +22,7 @@ struct DrawerContainerView: View {
     @State private var drawerHeight:CGFloat = .zero
     @GestureState private var isDragging:Bool = false
     
-    @State private var isChildViewActive:Bool = false
+    @State private var drawerRoute:DrawerNavigationRoute = .Base
     
     let insertAnimationTime:Double = 0.275
     let removalAnimationTime:Double = 0.15
@@ -36,7 +42,7 @@ struct DrawerContainerView: View {
         .onChange(of: isActive) { b in
             verticalOffset = .zero
             if !b {
-                isChildViewActive = false
+                drawerRoute = .Base
                 isAnimating = true
                 DispatchQueue.main.asyncAfter(deadline: .now()+removalAnimationTime) {
                     isAnimating = false
@@ -68,7 +74,7 @@ struct DrawerContainerView: View {
     }
     
     var drawerView: some View {
-        DrawerView(isDraggingDrawer: isDragging, isChildViewActive: $isChildViewActive)
+        DrawerView(isDraggingDrawer: isDragging, drawerRoute: $drawerRoute)
             .onPreferenceChange(ViewHeightKey.self) { value in
                 drawerHeight = value
             }

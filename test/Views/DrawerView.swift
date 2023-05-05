@@ -61,11 +61,14 @@ struct DrawerView: View {
         VStack {
             ForEach(defaultCells, id: \.self) { text in
                 DrawerCell(text: text) {
-                    if text != "Edit Name" {
-                        drawerRoute = .Account
-                    } else {
+                    switch text {
+                    case "Edit Name":
                         isFocused = true
                         drawerRoute = .EditName
+                    case "Account":
+                        drawerRoute = .Account
+                    default:
+                        break
                     }
                 }
                 .disabled(isDraggingDrawer)

@@ -61,7 +61,7 @@ struct DrawerContainerView: View {
     /// A semi-transparent background view that dismisses the drawer when tapped
     var background: some View {
         Color.black
-            .opacity(0.1)
+            .opacity(0.14)
             .ignoresSafeArea()
             .onTapGesture {
                 if !isAnimating {

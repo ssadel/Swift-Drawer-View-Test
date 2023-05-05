@@ -40,6 +40,7 @@ struct BaseView: View {
                         Text("scroll for buttery smooth animations")
                             .padding(.horizontal)
                     }
+                    Image(systemName: "arrow.right")
                 }
                 .padding()
             }
@@ -48,6 +49,7 @@ struct BaseView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.orange.opacity(0.065))
         .overlay(DrawerContainerView(isActive: $isDrawerActive, isAnimating: $isAnimating).ignoresSafeArea(.keyboard)) // MARK: Drawer Here
     }
 }

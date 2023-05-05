@@ -26,16 +26,16 @@ struct DrawerView: View {
             if isChildViewActive {
                 childView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
             } else {
                 defaultView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 1.04).combined(with: .opacity)/*.animation(.easeOut(duration: 0.1))*/)
+                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.14)))
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
         .animation(.easeOut(duration: 0.24), value: isChildViewActive)
-        .mask(drawerBackground.padding(.bottom, 1))
+        .mask(drawerBackground)
         .background(
             GeometryReader { proxy in
                 drawerBackground
@@ -87,6 +87,6 @@ struct DrawerView: View {
 
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerView(isDraggingDrawer: false, isChildViewActive: .constant(false))
+        BaseView()
     }
 }

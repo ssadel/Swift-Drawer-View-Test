@@ -22,15 +22,26 @@ struct BaseView: View {
             }
             .buttonStyle(.bordered)
             .disabled(isAnimating)
-            .padding(.top)
+            .padding(.vertical)
+            
+            VStack(alignment: .leading) {
+                Text("Current Drawer Routes")
+                    .font(.subheadline.weight(.medium))
+                Text("- Edit Name")
+                    .font(.subheadline.weight(.regular))
+                Text("- Account")
+                    .font(.subheadline.weight(.regular))
+            }
             
             ScrollView(.horizontal) {
                 HStack {
+                    Image(systemName: "arrow.left")
                     ForEach(0..<10) { _ in
                         Text("scroll for buttery smooth animations")
-                            .padding()
+                            .padding(.horizontal)
                     }
                 }
+                .padding()
             }
             .frame(height: 100)
             

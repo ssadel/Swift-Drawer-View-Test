@@ -48,6 +48,7 @@ struct BaseView: View {
             
             Spacer()
         }
+        .frame(maxWidth: .infinity)
         .background(Color.orange.opacity(0.065))
         .overlay(DrawerContainerView(isActive: $isDrawerActive, isAnimating: $isAnimating).ignoresSafeArea(.keyboard)) // MARK: Drawer Here
     }

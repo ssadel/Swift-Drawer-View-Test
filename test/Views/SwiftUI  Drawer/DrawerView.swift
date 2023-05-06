@@ -30,11 +30,11 @@ struct DrawerView: View {
             case .Base:
                 baseView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
+                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             case .Account:
                 accountView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             case .EditName:
                 editNameView
                     // .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
@@ -55,7 +55,7 @@ struct DrawerView: View {
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
         .padding(.bottom, drawerRoute == .EditName ? 310 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
-        .animation(.easeOut(duration: 0.24), value: drawerRoute)
+        .animation(.easeOut(duration: 0.2), value: drawerRoute)
     }
     
     private var baseView: some View {

@@ -42,6 +42,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C238A34C2A06C2DD0083C775 /* SwiftUI  Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				C29022342A02D74200E83C30 /* DrawerContainerView.swift */,
+				C29022302A02D29D00E83C30 /* DrawerView.swift */,
+				C29022322A02D47500E83C30 /* DrawerCell.swift */,
+				C238A3462A0474580083C775 /* BackButton.swift */,
+			);
+			path = "SwiftUI  Drawer";
+			sourceTree = "<group>";
+		};
+		C238A34D2A06C2E60083C775 /* UIKit Drawer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "UIKit Drawer";
+			sourceTree = "<group>";
+		};
 		C29022132A02D20500E83C30 = {
 			isa = PBXGroup;
 			children = (
@@ -82,10 +100,8 @@
 			children = (
 				C29022212A02D20500E83C30 /* ContentView.swift */,
 				C290222E2A02D23700E83C30 /* BaseView.swift */,
-				C29022302A02D29D00E83C30 /* DrawerView.swift */,
-				C29022342A02D74200E83C30 /* DrawerContainerView.swift */,
-				C29022322A02D47500E83C30 /* DrawerCell.swift */,
-				C238A3462A0474580083C775 /* BackButton.swift */,
+				C238A34C2A06C2DD0083C775 /* SwiftUI  Drawer */,
+				C238A34D2A06C2E60083C775 /* UIKit Drawer */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,6 +319,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +349,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

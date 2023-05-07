@@ -61,6 +61,9 @@ class DrawerViewController: UIViewController {
     private func setupGestures() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         drawerView.addGestureRecognizer(panGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapToDismiss(_:)))
+        background.addGestureRecognizer(tapGesture)
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -87,8 +90,12 @@ class DrawerViewController: UIViewController {
         }
     }
 
+    @objc func handleTapToDismiss(_ gesture: UITapGestureRecognizer) {
+        dismissDrawer()
+    }
+    
     func dismissDrawer() {
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: [.curveEaseOut], animations: {
             self.drawerView.frame.origin.y = self.view.bounds.height
             self.background.alpha = 0
         }) { _ in
@@ -97,7 +104,7 @@ class DrawerViewController: UIViewController {
     }
     
     func resetDrawer() {
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: [.curveEaseOut], animations: {
             self.drawerView.frame.origin.y = self.view.bounds.height - self.drawerView.bounds.height - 40
             self.background.alpha = 0.2
         }) { _ in

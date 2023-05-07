@@ -40,15 +40,6 @@ struct BaseView: View {
             }
             .padding(.vertical)
             
-            VStack(alignment: .leading) {
-                Text("Current Drawer Routes")
-                    .font(.subheadline.weight(.medium))
-                Text("- Edit Name")
-                    .font(.subheadline.weight(.regular))
-                Text("- Account")
-                    .font(.subheadline.weight(.regular))
-            }
-            
             ScrollView(.horizontal) {
                 HStack {
                     Image(systemName: "arrow.left")
@@ -67,8 +58,7 @@ struct BaseView: View {
         .frame(maxWidth: .infinity)
         .background(Color.orange.opacity(0.065))
         .overlay(DrawerContainerView(isActive: $isSwiftUIDrawerActive, isAnimating: $isAnimating))
-        //.overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive))
-        
+        .overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive).ignoresSafeArea())
     }
 }
 

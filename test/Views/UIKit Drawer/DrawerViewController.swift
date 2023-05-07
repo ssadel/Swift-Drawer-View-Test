@@ -71,10 +71,39 @@ class DrawerViewController: UIViewController {
             let newY = min(max(drawerView.frame.origin.y + translation.y, minY), view.bounds.height - 40)
             drawerView.frame.origin.y = newY
             gesture.setTranslation(.zero, in: view)
-            
+
             let progress = (view.bounds.height - newY) / (view.bounds.height - minY)
             background.alpha = 0.2 * progress
+        } else if gesture.state == .ended {
+            let velocity = gesture.velocity(in: view).y
+            let dismissThreshold: CGFloat = view.bounds.height - drawerView.bounds.height / 4
+
+            // Use a threshold for the velocity and check if the drawer view is 1/4 down to determine if the drawer should be dismissed or reset
+            if velocity > 500 || drawerView.frame.origin.y > dismissThreshold {
+                dismissDrawer()
+            } else {
+                resetDrawer()
+            }
         }
     }
+
+    func dismissDrawer() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.drawerView.frame.origin.y = self.view.bounds.height
+            self.background.alpha = 0
+        }) { _ in
+            // Perform any additional actions after the dismissal animation is completed
+        }
+    }
+    
+    func resetDrawer() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.drawerView.frame.origin.y = self.view.bounds.height - self.drawerView.bounds.height - 40
+            self.background.alpha = 0.2
+        }) { _ in
+            // Perform any additional actions after the reset animation is completed
+        }
+    }
+
     
 }

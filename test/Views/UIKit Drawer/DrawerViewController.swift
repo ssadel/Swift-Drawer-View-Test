@@ -38,11 +38,12 @@ class DrawerViewController: UIViewController {
     
     override func viewDidLoad() {
         setupViews()
+        setupGestures()
     }
     
     private func setupViews() {
         view.addSubview(background)
-        background.addSubview(drawerView)
+        view.addSubview(drawerView)
         
         NSLayoutConstraint.activate([
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -55,6 +56,25 @@ class DrawerViewController: UIViewController {
             drawerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             drawerView.heightAnchor.constraint(equalToConstant: 400)
         ])
+    }
+    
+    private func setupGestures() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        drawerView.addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        let minY = view.bounds.height - drawerView.bounds.height - 40
+        
+        if gesture.state == .changed {
+            let newY = min(max(drawerView.frame.origin.y + translation.y, minY), view.bounds.height - 40)
+            drawerView.frame.origin.y = newY
+            gesture.setTranslation(.zero, in: view)
+            
+            let progress = (view.bounds.height - newY) / (view.bounds.height - minY)
+            background.alpha = 0.2 * progress
+        }
     }
     
 }

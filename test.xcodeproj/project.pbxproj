@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C238A3472A0474580083C775 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A3462A0474580083C775 /* BackButton.swift */; };
+		C238A34F2A06C90A0083C775 /* DrawerViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A34E2A06C90A0083C775 /* DrawerViewRepresentable.swift */; };
+		C238A3512A06C9420083C775 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A3502A06C9420083C775 /* DrawerViewController.swift */; };
 		C29022202A02D20500E83C30 /* testApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C290221F2A02D20500E83C30 /* testApp.swift */; };
 		C29022222A02D20500E83C30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29022212A02D20500E83C30 /* ContentView.swift */; };
 		C29022242A02D20600E83C30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29022232A02D20600E83C30 /* Assets.xcassets */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		C238A3462A0474580083C775 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		C238A34E2A06C90A0083C775 /* DrawerViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewRepresentable.swift; sourceTree = "<group>"; };
+		C238A3502A06C9420083C775 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		C290221C2A02D20500E83C30 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C290221F2A02D20500E83C30 /* testApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testApp.swift; sourceTree = "<group>"; };
 		C29022212A02D20500E83C30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,7 +46,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C238A34C2A06C2DD0083C775 /* SwiftUI  Drawer */ = {
+		C238A34C2A06C2DD0083C775 /* SwiftUI Drawer */ = {
 			isa = PBXGroup;
 			children = (
 				C29022342A02D74200E83C30 /* DrawerContainerView.swift */,
@@ -50,12 +54,14 @@
 				C29022322A02D47500E83C30 /* DrawerCell.swift */,
 				C238A3462A0474580083C775 /* BackButton.swift */,
 			);
-			path = "SwiftUI  Drawer";
+			path = "SwiftUI Drawer";
 			sourceTree = "<group>";
 		};
 		C238A34D2A06C2E60083C775 /* UIKit Drawer */ = {
 			isa = PBXGroup;
 			children = (
+				C238A34E2A06C90A0083C775 /* DrawerViewRepresentable.swift */,
+				C238A3502A06C9420083C775 /* DrawerViewController.swift */,
 			);
 			path = "UIKit Drawer";
 			sourceTree = "<group>";
@@ -100,7 +106,7 @@
 			children = (
 				C29022212A02D20500E83C30 /* ContentView.swift */,
 				C290222E2A02D23700E83C30 /* BaseView.swift */,
-				C238A34C2A06C2DD0083C775 /* SwiftUI  Drawer */,
+				C238A34C2A06C2DD0083C775 /* SwiftUI Drawer */,
 				C238A34D2A06C2E60083C775 /* UIKit Drawer */,
 			);
 			path = Views;
@@ -180,9 +186,11 @@
 				C238A3472A0474580083C775 /* BackButton.swift in Sources */,
 				C29022222A02D20500E83C30 /* ContentView.swift in Sources */,
 				C29022202A02D20500E83C30 /* testApp.swift in Sources */,
+				C238A34F2A06C90A0083C775 /* DrawerViewRepresentable.swift in Sources */,
 				C29022352A02D74200E83C30 /* DrawerContainerView.swift in Sources */,
 				C29022312A02D29D00E83C30 /* DrawerView.swift in Sources */,
 				C29022332A02D47500E83C30 /* DrawerCell.swift in Sources */,
+				C238A3512A06C9420083C775 /* DrawerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

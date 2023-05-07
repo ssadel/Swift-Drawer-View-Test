@@ -9,19 +9,35 @@ import SwiftUI
 
 struct BaseView: View {
     
-    @State private var isDrawerActive:Bool = false
+    /// SWIFTUI
+    @State private var isSwiftUIDrawerActive:Bool = false
     @State private var isAnimating:Bool = false
+    
+    /// UIKIT
+    @State private var isUIKitDrawerActive:Bool = false
     
     var body: some View {
         
         VStack {
-            Button {
-                isDrawerActive.toggle()
-            } label: {
-                Text("Open Drawer")
+            HStack(spacing: 25) {
+                Button {
+                    isSwiftUIDrawerActive.toggle()
+                } label: {
+                    Text("SwiftUI")
+                }
+                .buttonStyle(.bordered)
+                .disabled(isAnimating)
+                
+                Divider()
+                    .frame(height: 60)
+                
+                Button {
+                    isUIKitDrawerActive.toggle()
+                } label: {
+                    Text("UIKit")
+                }
+                .buttonStyle(.bordered)
             }
-            .buttonStyle(.bordered)
-            .disabled(isAnimating)
             .padding(.vertical)
             
             VStack(alignment: .leading) {
@@ -50,7 +66,9 @@ struct BaseView: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color.orange.opacity(0.065))
-        .overlay(DrawerContainerView(isActive: $isDrawerActive, isAnimating: $isAnimating).ignoresSafeArea(.keyboard)) // MARK: Drawer Here
+        .overlay(DrawerContainerView(isActive: $isSwiftUIDrawerActive, isAnimating: $isAnimating))
+        //.overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive))
+        
     }
 }
 

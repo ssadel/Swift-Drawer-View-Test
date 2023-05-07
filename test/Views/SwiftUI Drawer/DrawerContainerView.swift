@@ -36,10 +36,10 @@ struct DrawerContainerView: View {
             
             if isActive {
                 drawerView
-                    .id("DrawerView")
             }
         }
-        .animation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: isActive)
+        .animation(.interactiveSpring(response: 0.3, dampingFraction: 0.84, blendDuration: 0), value: isActive)
+        .ignoresSafeArea(.keyboard)
         .onChange(of: isActive) { b in
             verticalOffset = .zero
             if !b {
@@ -79,6 +79,7 @@ struct DrawerContainerView: View {
     /// The main drawer view that includes the gesture for dragging
     private var drawerView: some View {
         DrawerView(isDraggingDrawer: isDragging, drawerRoute: $drawerRoute, isFocused: $isFocused)
+            .id("DrawerView")
             .onPreferenceChange(ViewHeightKey.self) { value in
                 drawerHeight = value
             }

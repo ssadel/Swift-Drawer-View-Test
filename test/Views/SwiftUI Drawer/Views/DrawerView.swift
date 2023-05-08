@@ -13,19 +13,16 @@ struct ViewHeightKey: PreferenceKey {
 }
 
 struct DrawerView: View {
+    @ObservedObject var viewModel:DrawerViewModel
     var isDraggingDrawer:Bool
-    @Binding var drawerRoute:DrawerNavigationRoute
     var isFocused:FocusState<Bool>.Binding
     
     @Namespace private var drawerTransition
     
-    private let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friend", "Emoji Skin Tone", "Status Settings", "Account"]
-    private let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
-    
     var body: some View {
         
         ZStack {
-            switch drawerRoute {
+            switch viewModel.drawerRoute {
             case .Base:
                 baseView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
@@ -55,23 +52,23 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
-        .padding(.bottom, (drawerRoute == .EditName || drawerRoute == .EditBio) ? 314 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
-        .animation(.easeOut(duration: 0.2), value: drawerRoute)
+        .padding(.bottom, (viewModel.drawerRoute == .EditName || viewModel.drawerRoute == .EditBio) ? 314 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
+        .animation(.easeOut(duration: 0.2), value: viewModel.drawerRoute)
     }
     
     private var baseView: some View {
         VStack {
-            ForEach(defaultCells, id: \.self) { text in
+            ForEach(viewModel.defaultCells, id: \.self) { text in
                 DrawerCell(text: text) {
                     switch text {
                     case DrawerNavigationRoute.EditName.rawValue:
                         isFocused.wrappedValue = true
-                        drawerRoute = .EditName
+                        viewModel.drawerRoute = .EditName
                     case DrawerNavigationRoute.EditBio.rawValue:
                         isFocused.wrappedValue = true
-                        drawerRoute = .EditBio
+                        viewModel.drawerRoute = .EditBio
                     case DrawerNavigationRoute.Account.rawValue:
-                        drawerRoute = .Account
+                        viewModel.drawerRoute = .Account
                     default:
                         break
                     }
@@ -84,12 +81,12 @@ struct DrawerView: View {
     
     private var accountView: some View {
         VStack {
-            ForEach(childCells, id: \.self) { text in
+            ForEach(viewModel.childCells, id: \.self) { text in
                 DrawerCell(text: text, foregroundColor: text == "Delete Account" || text == "Logout" ? .red : .primary)
                     .disabled(isDraggingDrawer)
             }
             BackButton {
-                drawerRoute = .Base
+                viewModel.drawerRoute = .Base
             }
         }
         .fixedSize(horizontal: false, vertical: true)
@@ -112,7 +109,7 @@ struct DrawerView: View {
             HStack {
                 Button {
                     self.dismissKeyboard()
-                    drawerRoute = .Base
+                    viewModel.drawerRoute = .Base
                 } label: {
                     Text("Cancel")
                         .padding(.horizontal)
@@ -125,7 +122,7 @@ struct DrawerView: View {
                 Spacer()
                 Button {
                     self.dismissKeyboard()
-                    drawerRoute = .Base
+                    viewModel.drawerRoute = .Base
                 } label: {
                     Text("Save")
                         .padding(.horizontal)
@@ -160,7 +157,7 @@ struct DrawerView: View {
             HStack {
                 Button {
                     self.dismissKeyboard()
-                    drawerRoute = .Base
+                    viewModel.drawerRoute = .Base
                 } label: {
                     Text("Cancel")
                         .padding(.horizontal)
@@ -173,7 +170,7 @@ struct DrawerView: View {
                 Spacer()
                 Button {
                     self.dismissKeyboard()
-                    drawerRoute = .Base
+                    viewModel.drawerRoute = .Base
                 } label: {
                     Text("Save")
                         .padding(.horizontal)

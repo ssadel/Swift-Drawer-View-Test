@@ -21,7 +21,7 @@ struct DrawerView: View {
     
     @Namespace private var drawerTransition
     
-    @State private var customDelegate = CustomScrollViewDelegate()
+    // @State private var customDelegate = CustomScrollViewDelegate()
     
     var body: some View {
         

@@ -10,7 +10,6 @@ import SwiftUI
 struct DrawerContainerView: View {
     
     @Binding var isActive:Bool
-    @Binding var isAnimating:Bool
     
     @StateObject var viewModel = DrawerViewModel()
     
@@ -18,9 +17,6 @@ struct DrawerContainerView: View {
     @State private var drawerHeight:CGFloat = .zero
     @GestureState private var isDragging:Bool = false
     @FocusState private var isFocused:Bool
-    
-    private let insertAnimationTime:Double = 0.275
-    private let removalAnimationTime:Double = 0.15
     
     var body: some View {
         
@@ -37,15 +33,6 @@ struct DrawerContainerView: View {
             verticalOffset = .zero
             if !b {
                 viewModel.drawerRoute = .Base
-                isAnimating = true
-                DispatchQueue.main.asyncAfter(deadline: .now()+removalAnimationTime) {
-                    isAnimating = false
-                }
-            } else {
-                isAnimating = true
-                DispatchQueue.main.asyncAfter(deadline: .now()+insertAnimationTime) {
-                    isAnimating = false
-                }
             }
         }
         
@@ -57,13 +44,11 @@ struct DrawerContainerView: View {
             .opacity(0.14)
             .ignoresSafeArea()
             .onTapGesture {
-                if !isAnimating {
-                    withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
-                        self.dismissKeyboard()
-                        verticalOffset += 100
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
-                            isActive = false
-                        }
+                withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.8, blendDuration: 0)) {
+                    self.dismissKeyboard()
+                    verticalOffset += 100
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+                        isActive = false
                     }
                 }
             }
@@ -84,19 +69,17 @@ struct DrawerContainerView: View {
                     })
                     .onChanged { v in
                         withAnimation(.linear(duration: 0.2)) {
-                            if !isAnimating {
-                                if v.translation.height > 0 {
-                                    verticalOffset = v.translation.height
-                                    self.dismissKeyboard()
-                                } else if v.translation.height > -35 {
-                                    verticalOffset = max(v.translation.height, -35)
-                                }
+                            if v.translation.height > 0 {
+                                verticalOffset = v.translation.height
+                                self.dismissKeyboard()
+                            } else if v.translation.height > -35 {
+                                verticalOffset = max(v.translation.height, -35)
                             }
                         }
                     }
                     .onEnded { v in
                         withAnimation {
-                            if !isAnimating, v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
+                            if v.translation.height > drawerHeight/1.3 || v.predictedEndTranslation.height > drawerHeight/1.3 {
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero
@@ -106,7 +89,7 @@ struct DrawerContainerView: View {
                             }
                         }
                     }
-            ) 
+            )
             .allowsHitTesting(!isDragging)
             .zIndex(1)
             .transition(.move(edge: .bottom))
@@ -118,7 +101,7 @@ struct DrawerContainerView: View {
 
 struct DrawerContainerView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawerContainerView(isActive: .constant(true), isAnimating: .constant(false))
+        DrawerContainerView(isActive: .constant(true))
     }
 }
 

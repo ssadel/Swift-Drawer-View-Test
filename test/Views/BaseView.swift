@@ -11,7 +11,6 @@ struct BaseView: View {
     
     /// SWIFTUI
     @State private var isSwiftUIDrawerActive:Bool = false
-    @State private var isAnimating:Bool = false
     
     /// UIKIT
     @State private var isUIKitDrawerActive:Bool = false
@@ -26,7 +25,6 @@ struct BaseView: View {
                     Text("SwiftUI")
                 }
                 .buttonStyle(.bordered)
-                .disabled(isAnimating)
                 
                 Divider()
                     .frame(height: 60)
@@ -52,7 +50,7 @@ struct BaseView: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color.orange.opacity(0.065))
-        .overlay(DrawerContainerView(isActive: $isSwiftUIDrawerActive, isAnimating: $isAnimating))
+        .overlay(DrawerContainerView(isActive: $isSwiftUIDrawerActive))
         // .overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive).ignoresSafeArea())
         .ignoresSafeArea(.keyboard)
     }

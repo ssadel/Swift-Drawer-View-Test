@@ -16,6 +16,7 @@ enum DrawerNavigationRoute: String {
     case ProfilePicture = "Change Profile Image"
     case CloseFriends = "Close Friends"
     case Emoji = "Emoji Skin Tone"
+    case StatusSettings = "Status Settings"
 }
 
 class DrawerViewModel:ObservableObject {
@@ -32,6 +33,8 @@ class DrawerViewModel:ObservableObject {
     @Published var photoItem:PhotosPickerItem?
     
     @Published var selectedEmoji:String = "✋"
+    
+    @Published var isStatusToggleEnabled:Bool = false
     
     let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friends", "Emoji Skin Tone", "Status Settings", "Account"]
     let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]

@@ -46,6 +46,10 @@ struct DrawerView: View {
                 emojiSkinToneView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+            case.StatusSettings:
+                statusSettingsView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             default:
                 Text("Nothing to see here")
             }
@@ -86,6 +90,8 @@ struct DrawerView: View {
                         viewModel.drawerRoute = .CloseFriends
                     case DrawerNavigationRoute.Emoji.rawValue:
                         viewModel.drawerRoute = .Emoji
+                    case DrawerNavigationRoute.StatusSettings.rawValue:
+                        viewModel.drawerRoute = .StatusSettings
                     default:
                         break
                     }
@@ -212,7 +218,7 @@ struct DrawerView: View {
                 TextField("Search People", text: .constant(""))
                     .font(.subheadline.weight(.semibold))
                     .focused(isFocused)
-                    .accentColor(.purple)
+                    .accentColor(.blue)
                     .onChange(of: isFocused.wrappedValue) { b in
                         print(b)
                         withAnimation(.easeOut(duration: 0.2)) { viewModel.shouldApplyKeyboardPadding = b }
@@ -258,7 +264,7 @@ struct DrawerView: View {
                     .padding(.vertical, 10)
                     .font(.subheadline.weight(.semibold))
                     .foregroundColor(.white)
-                    .background(Capsule(style: .continuous).foregroundColor(.purple))
+                    .background(Capsule(style: .continuous).foregroundColor(.blue))
                     .padding(.horizontal)
             }
             .buttonStyle(InteractiveButtonStyle())
@@ -302,6 +308,41 @@ struct DrawerView: View {
         }
     }
     
+    private var statusSettingsView: some View {
+        VStack {
+            Toggle("Hide statuses older than", isOn: $viewModel.isStatusToggleEnabled)
+                .padding(.horizontal)
+                .padding(.vertical, 7.5)
+                .background(RoundedRectangle(cornerRadius: 16, style: .continuous).foregroundColor(.gray.opacity(0.12)))
+                .padding(.horizontal)
+                .font(.subheadline.weight(.semibold))
+            VStack(alignment: .leading, spacing: 20) {
+                Text("24 hours")
+                Text("1 week")
+                Text("1 month")
+                Text("3 months")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 25)
+            .padding(.vertical)
+            .font(.subheadline.weight(.semibold))
+            .foregroundColor(.gray.opacity(0.4))
+            
+            Button {
+                viewModel.drawerRoute = .Base
+            } label: {
+                Text("Done")
+                    .foregroundColor(.white)
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(10)
+                    .background(Capsule(style: .continuous).foregroundColor(.green))
+                    .padding(.horizontal)
+            }
+            .buttonStyle(InteractiveButtonStyle())
+        }
+    }
+    
     private var drawerBackground: some View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 30, style: .continuous)
@@ -318,6 +359,6 @@ struct DrawerView: View {
 struct DrawerView_Previews: PreviewProvider {
     static var previews: some View {
         BaseView()
-        //DrawerView(isDraggingDrawer: false, drawerRoute: .constant(.EditName), isFocused: FocusState(true))
+        // DrawerView(isDraggingDrawer: false, drawerRoute: .constant(.EditName), isFocused: FocusState(true))
     }
 }

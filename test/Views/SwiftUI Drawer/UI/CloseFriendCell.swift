@@ -32,7 +32,7 @@ struct CloseFriendCell: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 25)
                         .padding(.vertical, 5)
-                        .background(Capsule(style: .continuous).foregroundColor(.purple))
+                        .background(Capsule(style: .continuous).foregroundColor(.blue))
                 }
                 .buttonStyle(InteractiveButtonStyle())
             }

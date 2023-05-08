@@ -26,14 +26,14 @@ class DrawerViewModel:ObservableObject {
             shouldApplyKeyboardPadding = (drawerRoute == .EditName || drawerRoute == .EditBio)
         }
     }
-    
     @Published var shouldApplyKeyboardPadding:Bool = false
     
+    @Published var nameText:String = "Sid"
+    @Published var bioText:String = "Yooo"
+    @Published var shouldShakeDrawer:Bool = false
     @Published var isPhotosPickerActive:Bool = false
     @Published var photoItem:PhotosPickerItem?
-    
     @Published var selectedEmoji:String = "✋"
-    
     @Published var isStatusToggleEnabled:Bool = false
     
     let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friends", "Emoji Skin Tone", "Status Settings", "Account"]

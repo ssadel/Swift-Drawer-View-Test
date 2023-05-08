@@ -13,6 +13,7 @@
 		C238A3612A087C0A0083C775 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = C238A3602A087C0A0083C775 /* Introspect */; };
 		C238A3672A088FDE0083C775 /* DrawerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A3662A088FDE0083C775 /* DrawerViewModel.swift */; };
 		C238A36C2A08984F0083C775 /* CloseFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A36B2A08984F0083C775 /* CloseFriendCell.swift */; };
+		C238A36F2A08A7210083C775 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A36E2A08A7210083C775 /* HapticManager.swift */; };
 		C29022202A02D20500E83C30 /* testApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C290221F2A02D20500E83C30 /* testApp.swift */; };
 		C29022222A02D20500E83C30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29022212A02D20500E83C30 /* ContentView.swift */; };
 		C29022242A02D20600E83C30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29022232A02D20600E83C30 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		C238A3502A06C9420083C775 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		C238A3662A088FDE0083C775 /* DrawerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewModel.swift; sourceTree = "<group>"; };
 		C238A36B2A08984F0083C775 /* CloseFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseFriendCell.swift; sourceTree = "<group>"; };
+		C238A36E2A08A7210083C775 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		C290221C2A02D20500E83C30 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C290221F2A02D20500E83C30 /* testApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testApp.swift; sourceTree = "<group>"; };
 		C29022212A02D20500E83C30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		C238A36D2A08A7060083C775 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				C238A36E2A08A7210083C775 /* HapticManager.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		C29022132A02D20500E83C30 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				C290221F2A02D20500E83C30 /* testApp.swift */,
+				C238A36D2A08A7060083C775 /* Constants */,
 				C290222D2A02D22700E83C30 /* Views */,
 				C29022232A02D20600E83C30 /* Assets.xcassets */,
 				C29022252A02D20600E83C30 /* Preview Content */,
@@ -222,6 +233,7 @@
 				C29022312A02D29D00E83C30 /* DrawerView.swift in Sources */,
 				C29022332A02D47500E83C30 /* DrawerCell.swift in Sources */,
 				C238A36C2A08984F0083C775 /* CloseFriendCell.swift in Sources */,
+				C238A36F2A08A7210083C775 /* HapticManager.swift in Sources */,
 				C238A3512A06C9420083C775 /* DrawerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

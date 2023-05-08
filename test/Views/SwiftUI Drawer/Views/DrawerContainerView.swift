@@ -110,6 +110,8 @@ struct DrawerContainerView: View {
             .allowsHitTesting(!isDragging)
             .zIndex(1)
             .transition(.move(edge: .bottom))
+            .offset(x: viewModel.shouldShakeDrawer ? -8 : 0)
+            .animation(Animation.default.repeatCount(3, autoreverses: true).speed(6), value: viewModel.shouldShakeDrawer)
     }
     
 }

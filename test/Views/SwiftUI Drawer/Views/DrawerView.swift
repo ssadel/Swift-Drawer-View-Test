@@ -118,7 +118,7 @@ struct DrawerView: View {
     
     private var editNameView: some View {
         VStack {
-            TextField("Name", text: .constant("Sid"))
+            TextField("Name", text: $viewModel.nameText)
                 .font(.subheadline.weight(.semibold))
                 .padding(.horizontal)
                 .padding(.vertical, 7.5)
@@ -164,7 +164,7 @@ struct DrawerView: View {
     
     private var editBioView: some View {
         VStack {
-            TextEditor(text: .constant("Yooo"))
+            TextEditor(text: $viewModel.bioText)
                 .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 .font(.subheadline.weight(.semibold))
@@ -177,6 +177,14 @@ struct DrawerView: View {
                 .accentColor(.green)
                 .onAppear {
                     isFocused.wrappedValue = true
+                }
+                .onChange(of: viewModel.bioText) { _ in
+                    if !viewModel.bioText.filter({ $0.isNewline }).isEmpty {
+                        let _ = viewModel.bioText.popLast()
+                        HapticManager.instance.notification(type: .error)
+                        viewModel.shouldShakeDrawer = true
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.24, execute:{ viewModel.shouldShakeDrawer = false})
+                    }
                 }
             HStack {
                 Button {

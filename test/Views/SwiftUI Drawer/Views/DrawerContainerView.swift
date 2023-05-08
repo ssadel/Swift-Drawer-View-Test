@@ -32,7 +32,7 @@ struct DrawerContainerView: View {
                 drawerView
             }
         }
-        .animation(.interactiveSpring(response: 0.3, dampingFraction: 0.84, blendDuration: 0), value: isActive)
+        .animation(.interactiveSpring(response: 0.33, dampingFraction: 0.81, blendDuration: 0), value: isActive)
         .onChange(of: isActive) { b in
             verticalOffset = .zero
             if !b {
@@ -100,7 +100,9 @@ struct DrawerContainerView: View {
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero
-                                isFocused = true
+                                if viewModel.drawerRoute != .CloseFriends {
+                                    isFocused = true
+                                }
                             }
                         }
                     }

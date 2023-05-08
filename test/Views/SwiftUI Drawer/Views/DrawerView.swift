@@ -38,6 +38,10 @@ struct DrawerView: View {
             case .EditBio:
                 editBioView
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
+            case .CloseFriends:
+                closeFriendsView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             default:
                 Text("Nothing to see here")
             }
@@ -55,7 +59,7 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
-        .padding(.bottom, (viewModel.drawerRoute == .EditName || viewModel.drawerRoute == .EditBio) ? 314 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
+        .padding(.bottom, viewModel.shouldApplyKeyboardPadding ? viewModel.keyboardHeight : 0)
         .animation(.easeOut(duration: 0.2), value: viewModel.drawerRoute)
     }
     
@@ -74,6 +78,8 @@ struct DrawerView: View {
                         viewModel.drawerRoute = .Account
                     case DrawerNavigationRoute.ProfilePicture.rawValue:
                         viewModel.isPhotosPickerActive = true
+                    case DrawerNavigationRoute.CloseFriends.rawValue:
+                        viewModel.drawerRoute = .CloseFriends
                     default:
                         break
                     }
@@ -190,6 +196,67 @@ struct DrawerView: View {
             .padding(.horizontal)
         }
         .fixedSize(horizontal: false, vertical: true)
+    }
+    
+    private var closeFriendsView: some View {
+        VStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .font(.subheadline.weight(.medium))
+                TextField("Search People", text: .constant(""))
+                    .font(.subheadline.weight(.semibold))
+                    .focused(isFocused)
+                    .accentColor(.purple)
+                    .onChange(of: isFocused.wrappedValue) { b in
+                        print(b)
+                        withAnimation(.easeOut(duration: 0.2)) { viewModel.shouldApplyKeyboardPadding = b }
+                    }
+            }
+            .foregroundColor(.gray.opacity(0.7))
+            .padding(.horizontal)
+            .padding(.vertical, 7.5)
+            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).foregroundColor(.gray.opacity(0.1)))
+            .padding(.horizontal)
+            .padding(.bottom, 10)
+            
+            ScrollView {
+                VStack {
+                    Text("Suggested")
+                        .font(.footnote.weight(.medium))
+                        .foregroundColor(.gray.opacity(0.9))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading)
+                        .padding(.top, 4)
+                    
+                    ForEach(0..<3) { _ in
+                        CloseFriendCell()
+                    }
+                }
+            }
+            .scrollDisabled(true)
+            .frame(height: UIScreen.main.bounds.height/1.75 - (viewModel.shouldApplyKeyboardPadding ? viewModel.keyboardHeight - 75 : 0))
+            .overlay(
+                LinearGradient(colors: [.white, .clear], startPoint: .top, endPoint: .bottom)
+                    .frame(height: 7.5)
+                , alignment: .top
+            )
+            
+            Button {
+                self.dismissKeyboard()
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.05) {
+                    viewModel.drawerRoute = .Base
+                }
+            } label: {
+                Text("Done")
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 7.5)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .background(Capsule(style: .continuous).foregroundColor(.purple))
+                    .padding(.horizontal)
+            }
+            .buttonStyle(InteractiveButtonStyle())
+        }
     }
     
     private var drawerBackground: some View {

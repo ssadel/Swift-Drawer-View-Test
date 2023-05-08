@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ViewHeightKey: PreferenceKey {
     static var defaultValue: CGFloat = .zero
@@ -37,6 +38,8 @@ struct DrawerView: View {
             case .EditBio:
                 editBioView
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
+            default:
+                Text("Nothing to see here")
             }
         }
         .padding(.top, 22.5) /// Padding for top bar
@@ -69,6 +72,8 @@ struct DrawerView: View {
                         viewModel.drawerRoute = .EditBio
                     case DrawerNavigationRoute.Account.rawValue:
                         viewModel.drawerRoute = .Account
+                    case DrawerNavigationRoute.ProfilePicture.rawValue:
+                        viewModel.isPhotosPickerActive = true
                     default:
                         break
                     }
@@ -77,6 +82,7 @@ struct DrawerView: View {
             }
         }
         .fixedSize(horizontal: false, vertical: true)
+        .photosPicker(isPresented: $viewModel.isPhotosPickerActive, selection: $viewModel.photoItem, photoLibrary: .shared())
     }
     
     private var accountView: some View {

@@ -40,6 +40,14 @@ struct BaseView: View {
             }
             .padding(.vertical)
             
+            Divider()
+                .padding(.horizontal)
+            
+            Text("Uncomment out uikit overlay to test uikit imp")
+                .padding()
+                .font(.subheadline.weight(.medium))
+                .multilineTextAlignment(.center)
+            
             Spacer()
         }
         .frame(maxWidth: .infinity)

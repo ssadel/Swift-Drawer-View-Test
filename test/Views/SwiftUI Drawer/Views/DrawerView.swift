@@ -26,12 +26,12 @@ struct DrawerView: View {
             switch viewModel.drawerRoute {
             case .Base:
                 baseView
-                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center) // Mess around with anchor to get morph effect
+                    .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case .Account:
                 accountView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case .EditName:
                 editNameView
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
@@ -41,15 +41,15 @@ struct DrawerView: View {
             case .CloseFriends:
                 closeFriendsView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case .Emoji:
                 emojiSkinToneView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case.StatusSettings:
                 statusSettingsView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             default:
                 Text("Nothing to see here")
             }

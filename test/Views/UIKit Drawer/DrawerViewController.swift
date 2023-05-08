@@ -113,6 +113,4 @@ class DrawerViewController: UIViewController {
             // Perform any additional actions after the reset animation is completed
         }
     }
-
-    
 }

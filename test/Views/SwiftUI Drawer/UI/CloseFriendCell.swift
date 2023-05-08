@@ -28,7 +28,7 @@ struct CloseFriendCell: View {
                     //
                 } label: {
                     Text("Add")
-                        .font(.footnote.weight(.semibold))
+                        .font(.caption.weight(.semibold))
                         .foregroundColor(.white)
                         .padding(.horizontal, 25)
                         .padding(.vertical, 5)

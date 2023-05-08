@@ -42,6 +42,10 @@ struct DrawerView: View {
                 closeFriendsView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
+            case .Emoji:
+                emojiSkinToneView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             default:
                 Text("Nothing to see here")
             }
@@ -80,6 +84,8 @@ struct DrawerView: View {
                         viewModel.isPhotosPickerActive = true
                     case DrawerNavigationRoute.CloseFriends.rawValue:
                         viewModel.drawerRoute = .CloseFriends
+                    case DrawerNavigationRoute.Emoji.rawValue:
+                        viewModel.drawerRoute = .Emoji
                     default:
                         break
                     }
@@ -249,13 +255,50 @@ struct DrawerView: View {
             } label: {
                 Text("Done")
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 7.5)
-                    .font(.headline)
+                    .padding(.vertical, 10)
+                    .font(.subheadline.weight(.semibold))
                     .foregroundColor(.white)
                     .background(Capsule(style: .continuous).foregroundColor(.purple))
                     .padding(.horizontal)
             }
             .buttonStyle(InteractiveButtonStyle())
+        }
+    }
+    
+    private var emojiSkinToneView: some View {
+        VStack {
+            LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
+                ForEach(viewModel.handEmojis, id:\.self) { emoji in
+                    Button {
+                        viewModel.selectedEmoji = emoji
+                    } label: {
+                        Text(emoji)
+                            .font(.system(size: 80))
+                            .minimumScaleFactor(0.5)
+                            .padding(15)
+                            .frame(width: UIScreen.main.bounds.width/4, height: UIScreen.main.bounds.width/4)
+                            .background(RoundedRectangle(cornerRadius: 20, style: .continuous).foregroundColor(viewModel.selectedEmoji == emoji ? .green.opacity(0.18) : .gray.opacity(0.12)))
+                    }
+                    .buttonStyle(InteractiveButtonStyle())
+                    .padding(.vertical, 5)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 5)
+            
+            Button {
+                viewModel.drawerRoute = .Base
+            } label: {
+                Text("Done")
+                    .foregroundColor(.white)
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(10)
+                    .background(Capsule(style: .continuous).foregroundColor(.green))
+                    .padding(.horizontal)
+            }
+            .buttonStyle(InteractiveButtonStyle())
+
         }
     }
     

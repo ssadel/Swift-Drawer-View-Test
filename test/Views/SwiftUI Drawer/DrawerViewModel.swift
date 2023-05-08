@@ -15,6 +15,7 @@ enum DrawerNavigationRoute: String {
     case EditBio = "Edit Bio"
     case ProfilePicture = "Change Profile Image"
     case CloseFriends = "Close Friends"
+    case Emoji = "Emoji Skin Tone"
 }
 
 class DrawerViewModel:ObservableObject {
@@ -30,8 +31,11 @@ class DrawerViewModel:ObservableObject {
     @Published var isPhotosPickerActive:Bool = false
     @Published var photoItem:PhotosPickerItem?
     
+    @Published var selectedEmoji:String = "✋"
+    
     let defaultCells:[String] = ["Edit Name", "Edit Bio", "Change Profile Image", "Close Friends", "Emoji Skin Tone", "Status Settings", "Account"]
     let childCells:[String] = ["Notifications", "Change Username", "Change Number", "Delete Account", "Logout"]
+    let handEmojis:[String] = ["✋🏻", "✋🏼", "✋🏽", "✋🏾", "✋🏿", "✋"]
     let keyboardHeight:CGFloat = 314 // TODO: Dynamically get keyboard height before isFocused = true and store globally
     
     init() {

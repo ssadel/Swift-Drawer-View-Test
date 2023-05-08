@@ -13,7 +13,6 @@ struct ViewHeightKey: PreferenceKey {
 }
 
 struct DrawerView: View {
-
     var isDraggingDrawer:Bool
     @Binding var drawerRoute:DrawerNavigationRoute
     var isFocused:FocusState<Bool>.Binding
@@ -37,7 +36,9 @@ struct DrawerView: View {
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.07)))
             case .EditName:
                 editNameView
-                    // .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
+            case .EditBio:
+                editBioView
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
             }
         }
@@ -54,7 +55,7 @@ struct DrawerView: View {
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .padding(.horizontal, 10)
         .shadow(color: .gray.opacity(0.4), radius: 8)
-        .padding(.bottom, drawerRoute == .EditName ? 310 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
+        .padding(.bottom, (drawerRoute == .EditName || drawerRoute == .EditBio) ? 314 : 0) // TODO: Dynamically get keyboard height before isFocused = true and store globally
         .animation(.easeOut(duration: 0.2), value: drawerRoute)
     }
     
@@ -63,10 +64,13 @@ struct DrawerView: View {
             ForEach(defaultCells, id: \.self) { text in
                 DrawerCell(text: text) {
                     switch text {
-                    case "Edit Name":
+                    case DrawerNavigationRoute.EditName.rawValue:
                         isFocused.wrappedValue = true
                         drawerRoute = .EditName
-                    case "Account":
+                    case DrawerNavigationRoute.EditBio.rawValue:
+                        isFocused.wrappedValue = true
+                        drawerRoute = .EditBio
+                    case DrawerNavigationRoute.Account.rawValue:
                         drawerRoute = .Account
                     default:
                         break
@@ -75,6 +79,7 @@ struct DrawerView: View {
                 .disabled(isDraggingDrawer)
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var accountView: some View {
@@ -87,6 +92,7 @@ struct DrawerView: View {
                 drawerRoute = .Base
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var editNameView: some View {
@@ -132,6 +138,55 @@ struct DrawerView: View {
             }
             .padding(.horizontal)
         }
+        .fixedSize(horizontal: false, vertical: true)
+    }
+    
+    private var editBioView: some View {
+        VStack {
+            TextEditor(text: .constant("Yooo"))
+                .scrollDisabled(true)
+                .scrollContentBackground(.hidden)
+                .font(.subheadline.weight(.semibold))
+                .frame(height: 95)
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: 12, style: .continuous).foregroundColor(.gray.opacity(0.1)))
+                .padding(.horizontal)
+                .padding(.bottom, 10)
+                .focused(isFocused)
+                .accentColor(.green)
+                .onAppear {
+                    isFocused.wrappedValue = true
+                }
+            HStack {
+                Button {
+                    self.dismissKeyboard()
+                    drawerRoute = .Base
+                } label: {
+                    Text("Cancel")
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.primary)
+                        .font(.subheadline.weight(.semibold))
+                        .background(Capsule(style: .continuous).foregroundColor(.gray.opacity(0.1)))
+                }
+                .buttonStyle(InteractiveButtonStyle())
+                Spacer()
+                Button {
+                    self.dismissKeyboard()
+                    drawerRoute = .Base
+                } label: {
+                    Text("Save")
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.white)
+                        .font(.subheadline.weight(.semibold))
+                        .background(Capsule(style: .continuous).foregroundColor(.green))
+                }
+                .buttonStyle(InteractiveButtonStyle())
+            }
+            .padding(.horizontal)
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var drawerBackground: some View {

@@ -32,6 +32,7 @@ class DrawerViewController: UIViewController {
         let v = UIView()
         v.backgroundColor = .white
         v.layer.cornerRadius = 30
+        v.layer.cornerCurve = .continuous
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -56,6 +57,7 @@ class DrawerViewController: UIViewController {
             drawerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             drawerView.heightAnchor.constraint(equalToConstant: 400)
         ])
+        
     }
     
     private func setupGestures() {

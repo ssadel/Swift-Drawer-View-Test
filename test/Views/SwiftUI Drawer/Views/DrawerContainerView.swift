@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-enum DrawerNavigationRoute {
+enum DrawerNavigationRoute: String {
     case Base
-    case Account
-    case EditName
+    case Account = "Account"
+    case EditName = "Edit Name"
+    case EditBio = "Edit Bio"
 }
 
 struct DrawerContainerView: View {
@@ -39,7 +40,6 @@ struct DrawerContainerView: View {
             }
         }
         .animation(.interactiveSpring(response: 0.3, dampingFraction: 0.84, blendDuration: 0), value: isActive)
-        .ignoresSafeArea(.keyboard)
         .onChange(of: isActive) { b in
             verticalOffset = .zero
             if !b {

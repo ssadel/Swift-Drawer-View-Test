@@ -40,25 +40,13 @@ struct BaseView: View {
             }
             .padding(.vertical)
             
-            ScrollView(.horizontal) {
-                HStack {
-                    Image(systemName: "arrow.left")
-                    ForEach(0..<10) { _ in
-                        Text("scroll for buttery smooth animations")
-                            .padding(.horizontal)
-                    }
-                    Image(systemName: "arrow.right")
-                }
-                .padding()
-            }
-            .frame(height: 100)
-            
             Spacer()
         }
         .frame(maxWidth: .infinity)
         .background(Color.orange.opacity(0.065))
         .overlay(DrawerContainerView(isActive: $isSwiftUIDrawerActive, isAnimating: $isAnimating))
-        .overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive).ignoresSafeArea())
+        // .overlay(DrawerViewRepresentable(isActive: $isUIKitDrawerActive).ignoresSafeArea())
+        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import Introspect
 
 struct ViewHeightKey: PreferenceKey {
     static var defaultValue: CGFloat = .zero
@@ -19,6 +20,8 @@ struct DrawerView: View {
     var isFocused:FocusState<Bool>.Binding
     
     @Namespace private var drawerTransition
+    
+    @State private var customDelegate = CustomScrollViewDelegate()
     
     var body: some View {
         
@@ -228,7 +231,6 @@ struct DrawerView: View {
                     .focused(isFocused)
                     .accentColor(.blue)
                     .onChange(of: isFocused.wrappedValue) { b in
-                        print(b)
                         withAnimation(.easeOut(duration: 0.2)) { viewModel.shouldApplyKeyboardPadding = b }
                     }
             }
@@ -253,7 +255,29 @@ struct DrawerView: View {
                     }
                 }
             }
-            .scrollDisabled(true)
+            .introspectScrollView(customize: { scrollView in
+                scrollView.isScrollEnabled = false
+//                customDelegate.onScroll = { scrollView in
+//                    let translation = scrollView.panGestureRecognizer.translation(in: scrollView).y
+//                    let contentOffset = scrollView.contentOffset.y
+//
+//                    print("Translation:", translation)
+//                    print("Content Offset:", contentOffset)
+//
+//                    if translation > 0 && contentOffset <= 0 {
+//                        // Scrolling down and reached the top edge of the ScrollView
+//                        scrollView.isScrollEnabled = false
+//                    } else if translation < 0 && contentOffset >= (scrollView.contentSize.height - scrollView.bounds.height) {
+//                        // Scrolling up and reached the bottom edge of the ScrollView
+//                        scrollView.isScrollEnabled = false
+//                    } else {
+//                        // Allow scrolling in other cases
+//                        scrollView.isScrollEnabled = true
+//                    }
+//                }
+//                scrollView.customDelegate = customDelegate
+//                scrollView.delegate = customDelegate
+            })
             .frame(height: UIScreen.main.bounds.height/1.75 - (viewModel.shouldApplyKeyboardPadding ? viewModel.keyboardHeight - 75 : 0))
             .overlay(
                 LinearGradient(colors: [.white, .clear], startPoint: .top, endPoint: .bottom)

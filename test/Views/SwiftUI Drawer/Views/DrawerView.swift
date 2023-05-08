@@ -133,6 +133,11 @@ struct DrawerView: View {
                 .onAppear {
                     isFocused.wrappedValue = true
                 }
+                .onSubmit {
+                    self.dismissKeyboard()
+                    viewModel.drawerRoute = .Base
+                }
+            
             HStack {
                 Button {
                     self.dismissKeyboard()

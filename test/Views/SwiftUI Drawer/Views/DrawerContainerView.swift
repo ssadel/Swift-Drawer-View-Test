@@ -100,7 +100,7 @@ struct DrawerContainerView: View {
                                 isActive = false
                             } else {
                                 verticalOffset  = .zero
-                                if viewModel.drawerRoute != .CloseFriends {
+                                if viewModel.drawerRoute == .EditBio || viewModel.drawerRoute == .EditName {
                                     isFocused = true
                                 }
                             }

@@ -31,10 +31,6 @@ struct DrawerView: View {
                 baseView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center) // Mess around with anchor to get morph effect
                     .transition(.scale(scale: 1.04).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
-            case .Account:
-                accountView
-                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
-                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case .EditName:
                 editNameView
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.11)))
@@ -51,6 +47,10 @@ struct DrawerView: View {
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             case.StatusSettings:
                 statusSettingsView
+                    .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
+                    .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
+            case .Account:
+                accountView
                     .matchedGeometryEffect(id: "DrawerNavigation", in: drawerTransition, properties: [.frame, .size], anchor: .center)
                     .transition(.scale(scale: 0.96).combined(with: .opacity).animation(.easeOut(duration: 0.085)))
             default:
@@ -85,8 +85,6 @@ struct DrawerView: View {
                     case DrawerNavigationRoute.EditBio.rawValue:
                         isFocused.wrappedValue = true
                         viewModel.drawerRoute = .EditBio
-                    case DrawerNavigationRoute.Account.rawValue:
-                        viewModel.drawerRoute = .Account
                     case DrawerNavigationRoute.ProfilePicture.rawValue:
                         viewModel.isPhotosPickerActive = true
                     case DrawerNavigationRoute.CloseFriends.rawValue:
@@ -95,6 +93,8 @@ struct DrawerView: View {
                         viewModel.drawerRoute = .Emoji
                     case DrawerNavigationRoute.StatusSettings.rawValue:
                         viewModel.drawerRoute = .StatusSettings
+                    case DrawerNavigationRoute.Account.rawValue:
+                        viewModel.drawerRoute = .Account
                     default:
                         break
                     }
@@ -104,19 +104,6 @@ struct DrawerView: View {
         }
         .fixedSize(horizontal: false, vertical: true)
         .photosPicker(isPresented: $viewModel.isPhotosPickerActive, selection: $viewModel.photoItem, photoLibrary: .shared())
-    }
-    
-    private var accountView: some View {
-        VStack {
-            ForEach(viewModel.childCells, id: \.self) { text in
-                DrawerCell(text: text, foregroundColor: text == "Delete Account" || text == "Logout" ? .red : .primary)
-                    .disabled(isDraggingDrawer)
-            }
-            BackButton {
-                viewModel.drawerRoute = .Base
-            }
-        }
-        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var editNameView: some View {
@@ -378,6 +365,19 @@ struct DrawerView: View {
             }
             .buttonStyle(InteractiveButtonStyle())
         }
+    }
+    
+    private var accountView: some View {
+        VStack {
+            ForEach(viewModel.childCells, id: \.self) { text in
+                DrawerCell(text: text, foregroundColor: text == "Delete Account" || text == "Logout" ? .red : .primary)
+                    .disabled(isDraggingDrawer)
+            }
+            BackButton {
+                viewModel.drawerRoute = .Base
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var drawerBackground: some View {
